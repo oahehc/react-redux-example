@@ -2,8 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Provider, connect } from "react-redux";
 import { createStore } from "redux";
 import { reducer, increment } from "./reduxModule";
-import logo from "./logo.svg";
-import "./App.css";
 
 function logger(name, props, state) {
   const counter = (props && props.counter) || "";
@@ -15,18 +13,13 @@ function logger(name, props, state) {
   });
 }
 
-function App(props) {
+function Comp(props) {
   const [comCounter, setComCounter] = useState(1);
 
   function handleClickIncrement() {
     logger("handleClickIncrement", props, { comCounter });
-    setTimeout(() => {
-      props.increment();
-    }, 1000);
-    setTimeout(() => {
-      logger("setState", props, { comCounter });
-      setComCounter(comCounter => comCounter + 1);
-    }, 1000);
+    props.increment();
+    setComCounter(comCounter => comCounter + 1);
   }
 
   useEffect(() => {
@@ -40,18 +33,18 @@ function App(props) {
   const { counter } = props;
   logger("render", props, { comCounter });
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <div>
-          <span>
-            {counter} | {comCounter}
+    <div>
+      <h2>Function Component</h2>
+      <span>
+        {counter} | {comCounter}
+      </span>
+      <div>
+        <button onClick={handleClickIncrement}>
+          <span role="img" aria-label="increment">
+            ➕
           </span>
-          <div>
-            <button onClick={handleClickIncrement}>➕</button>
-          </div>
-        </div>
-      </header>
+        </button>
+      </div>
     </div>
   );
 }
@@ -62,7 +55,7 @@ const mapStateToProps = state => {
   };
 };
 const mapDispatchToProps = { increment };
-const AppContainer = connect(mapStateToProps, mapDispatchToProps)(App);
+const AppContainer = connect(mapStateToProps, mapDispatchToProps)(Comp);
 const store = createStore(reducer);
 
 export default () => (

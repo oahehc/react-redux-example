@@ -2,8 +2,6 @@ import React from "react";
 import { Provider, connect } from "react-redux";
 import { createStore } from "redux";
 import { reducer, increment } from "./reduxModule";
-import logo from "./logo.svg";
-import "./App.css";
 
 function logger(name, props, state) {
   const counter = (props && props.counter) || "";
@@ -15,7 +13,7 @@ function logger(name, props, state) {
   });
 }
 
-class App extends React.Component {
+class Comp extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -52,15 +50,10 @@ class App extends React.Component {
 
   handleClickIncrement = () => {
     logger("handleClickIncrement", this.props, this.state);
-    setTimeout(() => {
-      logger("setState", this.props, this.state);
-      this.setState(({ comCounter }) => ({
-        comCounter: comCounter + 1
-      }));
-    }, 1000);
-    setTimeout(() => {
-      this.props.increment();
-    }, 1000);
+    this.props.increment();
+    this.setState(({ comCounter }) => ({
+      comCounter: comCounter + 1
+    }));
   };
 
   render() {
@@ -68,18 +61,18 @@ class App extends React.Component {
     const { comCounter } = this.state;
     logger("render", this.props, this.state);
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <div>
-            <span>
-              {counter} | {comCounter}
+      <div>
+        <h2>Class Component</h2>
+        <span>
+          {counter} | {comCounter}
+        </span>
+        <div>
+          <button onClick={this.handleClickIncrement}>
+            <span role="img" aria-label="increment">
+              ➕
             </span>
-            <div>
-              <button onClick={this.handleClickIncrement}>➕</button>
-            </div>
-          </div>
-        </header>
+          </button>
+        </div>
       </div>
     );
   }
@@ -91,7 +84,7 @@ const mapStateToProps = state => {
   };
 };
 const mapDispatchToProps = { increment };
-const AppContainer = connect(mapStateToProps, mapDispatchToProps)(App);
+const AppContainer = connect(mapStateToProps, mapDispatchToProps)(Comp);
 const store = createStore(reducer);
 
 export default () => (

@@ -1,6 +1,4 @@
 import React, { useState, useReducer, useContext } from "react";
-import logo from "./logo.svg";
-import "./App.css";
 
 const ReduxContext = React.createContext();
 
@@ -14,33 +12,30 @@ function logger(name, props, state) {
   });
 }
 
-function App() {
+function Comp() {
   const { counter, increment } = useContext(ReduxContext);
   const [comCounter, setComCounter] = useState(1);
 
   function handleClickIncrement() {
     logger("handleClickIncrement", { counter }, { comCounter });
     increment();
-    setTimeout(() => {
-      logger("setState", { counter }, { comCounter });
-      setComCounter(comCounter => comCounter + 1);
-    }, 1000);
+    setComCounter(comCounter => comCounter + 1);
   }
 
   logger("render", { counter }, { comCounter });
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <div>
-          <span>
-            {counter} | {comCounter}
+    <div>
+      <h2>Redux by Hooks</h2>
+      <span>
+        {counter} | {comCounter}
+      </span>
+      <div>
+        <button onClick={handleClickIncrement}>
+          <span role="img" aria-label="increment">
+            ➕
           </span>
-          <div>
-            <button onClick={handleClickIncrement}>➕</button>
-          </div>
-        </div>
-      </header>
+        </button>
+      </div>
     </div>
   );
 }
@@ -74,6 +69,6 @@ function ReduxProvider({ children }) {
 
 export default () => (
   <ReduxProvider>
-    <App />
+    <Comp />
   </ReduxProvider>
 );
