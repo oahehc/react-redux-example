@@ -1,16 +1,19 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import App from "./App";
-import ClassComponent from "./ClassComponent";
-import FunctionComponent from "./FunctionComponent";
-import CustomRedux from "./CustomRedux";
+import { createStore } from "redux";
+import { Provider } from "react-redux";
 import "./index.css";
+import App from "./App";
+import Container from "./Container";
+import { reducer } from "./reduxModule";
+
+const store = createStore(reducer);
 
 ReactDOM.render(
-  <App>
-    <ClassComponent />
-    <FunctionComponent />
-    <CustomRedux />
-  </App>,
+  <Provider store={store}>
+    <App>
+      <Container />
+    </App>
+  </Provider>,
   document.getElementById("root")
 );
