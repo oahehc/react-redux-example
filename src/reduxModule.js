@@ -1,19 +1,15 @@
 const INCREMENT = "redux/increment";
-const DECREMENT = "redux/decrement";
 
 const initial = {
   counter: 1
 };
 
 export const reducer = (state = initial, action) => {
+  console.log("----- [Redux]", action, state);
   switch (action.type) {
     case INCREMENT:
       return {
         counter: state.counter + 1
-      };
-    case DECREMENT:
-      return {
-        counter: state.counter - 1
       };
     default:
       return state;
@@ -21,12 +17,8 @@ export const reducer = (state = initial, action) => {
 };
 
 export const increment = () => {
+  console.log("----- [Redux] dispatch action");
   return {
     type: INCREMENT
-  };
-};
-export const decrement = () => {
-  return {
-    type: DECREMENT
   };
 };
