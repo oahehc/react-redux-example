@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Provider, connect } from "react-redux";
 import { createStore } from "redux";
-import { reducer, increment } from "./reduxModule";
+import { reducer, incrementAction } from "./reduxModule";
 
 function logger(name, props, state) {
   const counter = (props && props.counter) || "";
@@ -18,7 +18,7 @@ function Comp(props) {
 
   function handleClickIncrement() {
     logger("handleClickIncrement", props, { comCounter });
-    props.increment();
+    props.incrementAction();
     setComCounter(comCounter => comCounter + 1);
   }
 
@@ -54,7 +54,7 @@ const mapStateToProps = state => {
     counter: state.counter
   };
 };
-const mapDispatchToProps = { increment };
+const mapDispatchToProps = { incrementAction };
 const AppContainer = connect(mapStateToProps, mapDispatchToProps)(Comp);
 const store = createStore(reducer);
 

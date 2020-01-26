@@ -1,7 +1,7 @@
 import React from "react";
 import { Provider, connect } from "react-redux";
 import { createStore } from "redux";
-import { reducer, increment } from "./reduxModule";
+import { reducer, incrementAction } from "./reduxModule";
 
 function logger(name, props, state) {
   const counter = (props && props.counter) || "";
@@ -50,7 +50,7 @@ class Comp extends React.Component {
 
   handleClickIncrement = () => {
     logger("handleClickIncrement", this.props, this.state);
-    this.props.increment();
+    this.props.incrementAction();
     this.setState(({ comCounter }) => ({
       comCounter: comCounter + 1
     }));
@@ -83,7 +83,7 @@ const mapStateToProps = state => {
     counter: state.counter
   };
 };
-const mapDispatchToProps = { increment };
+const mapDispatchToProps = { incrementAction };
 const AppContainer = connect(mapStateToProps, mapDispatchToProps)(Comp);
 const store = createStore(reducer);
 

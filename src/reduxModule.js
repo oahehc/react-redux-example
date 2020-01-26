@@ -16,7 +16,7 @@ export const reducer = (state = initial, action) => {
   }
 };
 
-export const increment = () => {
+export const incrementAction = () => {
   console.log("----- [Redux] dispatch action");
   return {
     type: INCREMENT
