@@ -1,6 +1,7 @@
 import React from "react";
-import { connect } from "react-redux";
-import { increment } from "./reduxModule";
+import { Provider, connect } from "react-redux";
+import { createStore } from "redux";
+import { reducer, increment } from "./reduxModule";
 import logo from "./logo.svg";
 import "./App.css";
 
@@ -51,12 +52,14 @@ class App extends React.Component {
 
   handleClickIncrement = () => {
     logger("handleClickIncrement", this.props, this.state);
-    this.props.increment();
     setTimeout(() => {
       logger("setState", this.props, this.state);
       this.setState(({ comCounter }) => ({
         comCounter: comCounter + 1
       }));
+    }, 1000);
+    setTimeout(() => {
+      this.props.increment();
     }, 1000);
   };
 
@@ -73,7 +76,7 @@ class App extends React.Component {
               {counter} | {comCounter}
             </span>
             <div>
-              <button onClick={this.handleClickIncrement}>increment</button>
+              <button onClick={this.handleClickIncrement}>➕</button>
             </div>
           </div>
         </header>
@@ -88,5 +91,11 @@ const mapStateToProps = state => {
   };
 };
 const mapDispatchToProps = { increment };
+const AppContainer = connect(mapStateToProps, mapDispatchToProps)(App);
+const store = createStore(reducer);
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default () => (
+  <Provider store={store}>
+    <AppContainer />
+  </Provider>
+);
