@@ -1,23 +1,19 @@
 const INCREMENT = "redux/increment";
 
-const initial = {
-  counter: 1
-};
-
-export const reducer = (state = initial, action) => {
+export function reducer(state, action) {
   switch (action.type) {
     case INCREMENT:
-      return {
-        counter: state.counter + action.amount
-      };
+      return state + action.amount;
     default:
       return state;
   }
-};
+}
 
-export const incrementAction = amount => {
-  return {
-    type: INCREMENT,
-    amount
+export function incrementActionCreator(dispatch) {
+  return amount => {
+    dispatch({
+      type: INCREMENT,
+      amount
+    });
   };
-};
+}

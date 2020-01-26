@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
+import { ReduxContext } from "./Provider";
 
-export default function Comp({ counter, incrementAction }) {
+export default function Comp() {
+  const { counter, incrementAction } = useContext(ReduxContext);
+
   function handleIncreaseOne() {
     incrementAction(1);
   }
